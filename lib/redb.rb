@@ -20,7 +20,7 @@ class ReDb
 
   def new_data(table_name, data)
     table = read_table(table_name)
-    table["#{table['0']['nextId'] += 1}"] = data
+    table["#{table['0']['nextId'] + 1}"] = data
     File.open("./redb/#{table_name}", "w+"){|x| x.write(table)}
   end
 

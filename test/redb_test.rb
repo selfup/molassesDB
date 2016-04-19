@@ -33,7 +33,7 @@ class ReDbTest < Minitest::Test
     redb.new_data('lol', {'test' => 'data'})
     redb.new_data('lol', {'test' => 'data'})
 
-    expected = {"0"=>{"table_name"=>"lol", "nextId"=>2}, "2"=>{"test"=>"data"}}
+    expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "2"=>{"test"=>"data"}}
     assert_equal expected, redb.read_table('lol')
 
     drop
