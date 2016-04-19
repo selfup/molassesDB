@@ -18,9 +18,15 @@ class ReDb
     File.delete("./redb/#{table_name}")
   end
 
+  def new_data(table_name, data)
+    table = read_table(table_name)
+    table["#{table['0']['nextId'] += 1}"] = data
+    File.open("./redb/#{table_name}", "w+"){|x| x.write(table)}
+  end
+
   private
 
   def meta_data(table_name)
-    {'0' => {'table_name' => "#{table_name}", 'nextId' => 2}}
+    {'0' => {'table_name' => "#{table_name}", 'nextId' => 1}}
   end
 end

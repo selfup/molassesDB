@@ -14,7 +14,7 @@ class ReDbTest < Minitest::Test
     redb.create_table('lol')
 
     expected = redb.read_table('lol')
-    assert_equal expected, {"0"=>{"table_name"=>"lol", "nextId"=>2}}
+    assert_equal expected, {"0"=>{"table_name"=>"lol", "nextId"=>1}}
 
     drop
   end
@@ -23,7 +23,18 @@ class ReDbTest < Minitest::Test
     redb.create_table('lol')
 
     expected = redb.read_table('lol')
-    assert_equal expected, {"0"=>{"table_name"=>"lol", "nextId"=>2}}
+    assert_equal expected, {"0"=>{"table_name"=>"lol", "nextId"=>1}}
+
+    drop
+  end
+
+  def test_it_can_add_data
+    redb.create_table('lol')
+    redb.new_data('lol', {'test' => 'data'})
+    redb.new_data('lol', {'test' => 'data'})
+
+    expected = {"0"=>{"table_name"=>"lol", "nextId"=>2}, "2"=>{"test"=>"data"}}
+    assert_equal expected, redb.read_table('lol')
 
     drop
   end
