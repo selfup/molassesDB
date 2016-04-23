@@ -1,7 +1,6 @@
 require 'open-uri'
 
 class ReDb
-
   def initialize
     return Dir.mkdir("redb") if !File.exist?("redb")
   end
