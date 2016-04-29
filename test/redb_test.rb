@@ -126,4 +126,23 @@ class ReDbTest < Minitest::Test
 
     redb.drop_tables('lol', 'omg')
   end
+
+  def test_it_can_read_from_more_than_one_table
+    redb.create_tables('lol', 'omg')
+
+    redb.new_datas(
+      ['lol', {'testing' => 'fresh data'}],
+      ['omg', {'testing' => 'fresh data'}]
+    )
+
+    expected = [
+      {"0"=>{"table_name"=>"lol", "nextId"=>2}, "1"=>{"testing"=>"fresh data"}},
+      {"0"=>{"table_name"=>"omg", "nextId"=>2}, "1"=>{"testing"=>"fresh data"}}
+    ]
+
+    assert_equal Array, redb.read_tables('lol', 'omg').class
+    assert_equal expected, redb.read_tables('lol', 'omg')
+
+    redb.drop_tables('lol', 'omg')
+  end
 end

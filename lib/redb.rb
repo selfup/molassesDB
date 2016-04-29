@@ -26,6 +26,10 @@ class ReDb
     eval(File.open("./redb/#{table_name}", "r+").read)
   end
 
+  def read_tables(*table_names)
+    table_names.map! { |x| read_table(x) }
+  end
+
   def drop_table(table_name)
     File.delete("./redb/#{table_name}")
   end
