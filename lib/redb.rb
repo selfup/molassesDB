@@ -5,7 +5,7 @@ class ReDb
     return Dir.mkdir("redb") if !File.exist?("redb")
   end
 
-  OPEN_AND_WRITE = ->(method, table_name) do
+  OPEN_AND_WRITE = -> (method, table_name) do
     return if File.exist?(table_name)
     File.open("./redb/#{table_name}", "w+"){|x| x.write(method)}
   end
