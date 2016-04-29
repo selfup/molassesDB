@@ -41,6 +41,10 @@ class ReDb
     File.open("./redb/#{table_name}", "w+"){|x| x.write(table)}
   end
 
+  def new_datas(*tables_and_data)
+    tables_and_data.map { |x| new_data(x[0], x[1]) }
+  end
+
   def update_table(table_name, data)
     new_data = meta_data(table_name)
     new_data['1'] = data

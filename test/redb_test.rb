@@ -109,4 +109,21 @@ class ReDbTest < Minitest::Test
 
     assert redb.drop_tables('lol', 'omg', 'rofl', 'lmao', 'wtf')
   end
+
+  def test_it_can_add_data_to_more_than_one_table
+    redb.create_tables('lol', 'omg')
+
+    redb.new_datas(
+      ['lol', {'testing' => 'fresh data'}],
+      ['omg', {'testing' => 'fresh data'}]
+    )
+
+    expected1 = {"0"=>{"table_name"=>"lol", "nextId"=>2}, "1"=>{"testing"=>"fresh data"}}
+    expected2 = {"0"=>{"table_name"=>"omg", "nextId"=>2}, "1"=>{"testing"=>"fresh data"}}
+
+    assert_equal expected1, redb.read_table('lol')
+    assert_equal expected2, redb.read_table('omg')
+
+    redb.drop_tables('lol', 'omg')
+  end
 end
