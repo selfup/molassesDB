@@ -53,16 +53,40 @@ class ReDbTest < Minitest::Test
 
     drop
   end
-  
+
   def test_it_can_execute_a_where_satement_like_rejs_with_ids_too
     redb.create_table('lol')
     redb.new_data('lol', {'test' => 'data1'})
     redb.new_data('lol', {'test' => 'data2'})
     redb.new_data('lol', {'test' => 'data1'})
-    
+
     expected = [["1", {"test"=>"data1"}], ["3", {"test"=>"data1"}]]
     assert_equal expected, redb.where('lol', 'data1')
 
     drop
+  end
+
+  def test_it_can_update_multiple_tables
+    redb.create_table('lol')
+    redb.create_table('omg')
+    redb.create_table('wtf')
+
+    redb.new_data('lol', {'test' => 'old data'})
+    redb.new_data('omg', {'test' => 'old data'})
+    redb.new_data('wtf', {'test' => 'old data'})
+
+    redb.update_tables(
+      ['lol', {'test' => 'new data'}],
+      ['omg', {'test' => 'new data'}],
+      ['wtf', {'test' => 'new data'}]
+    )
+
+    expected1 = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "1"=>{"test"=>"new data"}}
+    expected2 = {"0"=>{"table_name"=>"omg", "nextId"=>1}, "1"=>{"test"=>"new data"}}
+    expected3 = {"0"=>{"table_name"=>"wtf", "nextId"=>1}, "1"=>{"test"=>"new data"}}
+
+    assert_equal expected1, redb.read_table('lol')
+    assert_equal expected2, redb.read_table('omg')
+    assert_equal expected3, redb.read_table('wtf')
   end
 end

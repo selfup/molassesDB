@@ -9,7 +9,7 @@ class ReDb
     return if File.exist?(table_name)
     File.open("./redb/#{table_name}", "w+"){|x| x.write(method)}
   end
-  
+
   WHERE_PUSH = -> (x, query, queryReturn) do
     queryReturn << x if x[1].values.include?(query)
   end
@@ -38,7 +38,11 @@ class ReDb
     new_data['1'] = data
     File.open("./redb/#{table_name}", "w+"){|x| x.write(new_data)}
   end
-  
+
+  def update_tables(*tables_and_data)
+    tables_and_data.map {|x| update_table(x[0], x[1])}
+  end
+
   def where(table_name, query)
     queryReturn = []
     read_table(table_name).map {|x| WHERE_PUSH.(x, query, queryReturn)}
