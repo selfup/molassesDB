@@ -103,4 +103,10 @@ class ReDbTest < Minitest::Test
     assert redb.drop_table('lmao')
     assert redb.drop_table('wtf')
   end
+
+  def test_it_can_drop_multiple_tables
+    redb.create_tables('lol', 'omg', 'rofl', 'lmao', 'wtf')
+
+    assert redb.drop_tables('lol', 'omg', 'rofl', 'lmao', 'wtf')
+  end
 end

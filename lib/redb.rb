@@ -30,6 +30,10 @@ class ReDb
     File.delete("./redb/#{table_name}")
   end
 
+  def drop_tables(*tables)
+    tables.map {|x| drop_table(x) }
+  end
+
   def new_data(table_name, data)
     table = read_table(table_name)
     table["#{table['0']['nextId']}"] = data
