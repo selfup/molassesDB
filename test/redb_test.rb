@@ -149,22 +149,23 @@ class ReDbTest < Minitest::Test
   def test_it_can_perform
     a = Time.now
     redb.create_tables('lol', 'omg')
-    10000.times do
+    1000.times do
       redb.read_tables('lol', 'omg')
     end
     redb.drop_tables('lol', 'omg')
     puts Time.now - a
   end
 
-  def test_it_can_add_a_lot_of_data
+  def test_it_can_add_and_read_a_good_amount_of_data
     a = Time.now
-    10000.times do
+    1000.times do
       redb.create_tables('lol', 'omg')
       redb.new_datas(
         ['lol', {'testing' => 'fresh data'}],
         ['omg', {'testing' => 'fresh data'}]
       )
     end
+    redb.read_tables('lol', 'omg')
     redb.drop_tables('lol', 'omg')
     puts Time.now - a
   end
