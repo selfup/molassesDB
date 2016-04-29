@@ -1,4 +1,4 @@
-require_relative './test_helper'
+# require_relative './test_helper'
 require_relative '../lib/redb'
 
 class ReDbTest < Minitest::Test
@@ -34,6 +34,19 @@ class ReDbTest < Minitest::Test
     redb.new_data('lol', {'test' => 'data'})
 
     expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "2"=>{"test"=>"data"}}
+    assert_equal expected, redb.read_table('lol')
+
+    drop
+  end
+
+  def test_it_can_replace_data
+    redb.create_table('lol')
+    redb.new_data('lol', {'test' => 'data'})
+    redb.new_data('lol', {'test' => 'data'})
+
+    redb.update_table('lol', {'test' => 'replaced'})
+
+    expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "2"=>{"test"=>"replaced"}}
     assert_equal expected, redb.read_table('lol')
 
     drop

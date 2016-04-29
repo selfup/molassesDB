@@ -28,6 +28,12 @@ class ReDb
     File.open("./redb/#{table_name}", "w+"){|x| x.write(table)}
   end
 
+  def update_table(table_name, data)
+    new_data = meta_data(table_name)
+    new_data['2'] = data
+    File.open("./redb/#{table_name}", "w+"){|x| x.write(new_data)}
+  end
+
   private
 
   def meta_data(table_name)
