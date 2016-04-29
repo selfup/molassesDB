@@ -10,7 +10,7 @@ class ReDb
     File.open("./redb/#{table_name}", "w+"){|x| x.write(method)}
   end
   
-  WHERE_QUERY_PUSH = -> (x, query, queryReturn) do
+  WHERE_PUSH = -> (x, query, queryReturn) do
     queryReturn << x if x[1].values.include?(query)
   end
 
@@ -41,7 +41,7 @@ class ReDb
   
   def where(table_name, query)
     queryReturn = []
-    read_table(table_name).map {|x| WHERE_QUERY_PUSH.(x, query, queryReturn)}
+    read_table(table_name).map {|x| WHERE_PUSH.(x, query, queryReturn)}
     queryReturn
   end
 
