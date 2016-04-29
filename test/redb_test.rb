@@ -1,4 +1,4 @@
-# require_relative './test_helper'
+require_relative './test_helper'
 require_relative '../lib/redb'
 
 class ReDbTest < Minitest::Test
@@ -88,5 +88,19 @@ class ReDbTest < Minitest::Test
     assert_equal expected1, redb.read_table('lol')
     assert_equal expected2, redb.read_table('omg')
     assert_equal expected3, redb.read_table('wtf')
+
+    redb.drop_table('lol')
+    redb.drop_table('omg')
+    redb.drop_table('wtf')
+  end
+
+  def test_it_can_create_multiple_tables
+    redb.create_tables('lol', 'omg', 'rofl', 'lmao', 'wtf')
+
+    assert redb.drop_table('lol')
+    assert redb.drop_table('omg')
+    assert redb.drop_table('rofl')
+    assert redb.drop_table('lmao')
+    assert redb.drop_table('wtf')
   end
 end

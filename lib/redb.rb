@@ -18,6 +18,10 @@ class ReDb
     OPEN_AND_WRITE.(meta_data(table_name), table_name)
   end
 
+  def create_tables(*table_names)
+    table_names.map { |x| create_table(x) }
+  end
+
   def read_table(table_name)
     eval(File.open("./redb/#{table_name}", "r+").read)
   end
