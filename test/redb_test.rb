@@ -30,10 +30,12 @@ class ReDbTest < Minitest::Test
 
   def test_it_can_add_data
     redb.create_table('lol')
-    redb.new_data('lol', {'test' => 'data'})
-    redb.new_data('lol', {'test' => 'data'})
+    redb.new_data('lol', {'test' => 'data1'})
+    redb.new_data('lol', {'test' => 'data2'})
 
-    expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "2"=>{"test"=>"data"}}
+    expected = {
+      "0"=>{"table_name"=>"lol", "nextId"=>3}, "1"=>{"test"=>"data1"}, "2"=>{"test"=>"data2"}
+    }
     assert_equal expected, redb.read_table('lol')
 
     drop
@@ -41,12 +43,12 @@ class ReDbTest < Minitest::Test
 
   def test_it_can_replace_data
     redb.create_table('lol')
-    redb.new_data('lol', {'test' => 'data'})
-    redb.new_data('lol', {'test' => 'data'})
+    redb.new_data('lol', {'test' => 'data1'})
+    redb.new_data('lol', {'test' => 'data2'})
 
     redb.update_table('lol', {'test' => 'replaced'})
 
-    expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "2"=>{"test"=>"replaced"}}
+    expected = {"0"=>{"table_name"=>"lol", "nextId"=>1}, "1"=>{"test"=>"replaced"}}
     assert_equal expected, redb.read_table('lol')
 
     drop
