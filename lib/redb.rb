@@ -37,7 +37,6 @@ class ReDb
   
   def where(table_name, query)
     queryReturn = []
-    read_table(table_name)
     read_table(table_name).map do |x|
       if x[1].values.include?(query)
         queryReturn << x
