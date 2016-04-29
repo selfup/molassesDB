@@ -11,9 +11,7 @@ class ReDb
   end
   
   WHERE_QUERY_PUSH = -> (x, query, queryReturn) do
-    if x[1].values.include?(query)
-      queryReturn << x
-    end
+    queryReturn << x if x[1].values.include?(query)
   end
 
   def create_table(table_name)
