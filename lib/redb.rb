@@ -34,6 +34,17 @@ class ReDb
     new_data['1'] = data
     File.open("./redb/#{table_name}", "w+"){|x| x.write(new_data)}
   end
+  
+  def where(table_name, query)
+    queryReturn = []
+    read_table(table_name)
+    read_table(table_name).map do |x|
+      if x[1].values.include?(query)
+        queryReturn << x
+      end
+    end
+    queryReturn
+  end
 
   private
 

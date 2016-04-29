@@ -53,4 +53,16 @@ class ReDbTest < Minitest::Test
 
     drop
   end
+  
+  def test_it_can_execute_a_where_satement_like_rejs_with_ids_too
+    redb.create_table('lol')
+    redb.new_data('lol', {'test' => 'data1'})
+    redb.new_data('lol', {'test' => 'data2'})
+    redb.new_data('lol', {'test' => 'data1'})
+    
+    expected = [["1", {"test"=>"data1"}], ["3", {"test"=>"data1"}]]
+    assert_equal expected, redb.where('lol', 'data1')
+
+    drop
+  end
 end
