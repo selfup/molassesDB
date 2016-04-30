@@ -158,8 +158,8 @@ class ReDbTest < Minitest::Test
 
   def test_it_can_add_and_read_a_good_amount_of_data
     a = Time.now
+    redb.create_tables('lol', 'omg')
     1000.times do
-      redb.create_tables('lol', 'omg')
       redb.new_datas(
         ['lol', {'testing' => 'fresh data'}],
         ['omg', {'testing' => 'fresh data'}]
