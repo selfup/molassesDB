@@ -7,7 +7,7 @@ class ReDb
 
   OPEN_AND_WRITE = -> (method, table_name) do
     return if File.exist?(table_name)
-    File.open("./redb/#{table_name}", "w+"){|x| x.write(method)}
+    File.open("./redb/#{table_name}", "w+"){ |x| x.write(method) }
   end
 
   WHERE_PUSH = -> (x, query, queryReturn) do
@@ -35,14 +35,14 @@ class ReDb
   end
 
   def drop_tables(*tables)
-    tables.map {|x| drop_table(x) }
+    tables.map { |x| drop_table(x) }
   end
 
   def new_data(table_name, data)
     table = read_table(table_name)
     table["#{table['0']['nextId']}"] = data
     table['0']['nextId'] += 1
-    File.open("./redb/#{table_name}", "w+"){|x| x.write(table)}
+    File.open("./redb/#{table_name}", "w+"){ |x| x.write(table) }
   end
 
   def new_datas(*tables_and_data)
@@ -52,16 +52,16 @@ class ReDb
   def update_table(table_name, data)
     new_data = meta_data(table_name)
     new_data['1'] = data
-    File.open("./redb/#{table_name}", "w+"){|x| x.write(new_data)}
+    File.open("./redb/#{table_name}", "w+"){ |x| x.write(new_data) }
   end
 
   def update_tables(*tables_and_data)
-    tables_and_data.map {|x| update_table(x[0], x[1])}
+    tables_and_data.map { |x| update_table(x[0], x[1]) }
   end
 
   def where(table_name, query)
     queryReturn = []
-    read_table(table_name).map {|x| WHERE_PUSH.(x, query, queryReturn)}
+    read_table(table_name).map { |x| WHERE_PUSH.(x, query, queryReturn) }
     queryReturn
   end
 
